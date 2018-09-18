@@ -270,3 +270,22 @@ void Diary::on_timeEdit_timeChanged(const QTime &time)
     }
     else ui->saveButton->setDisabled(false);
 }
+
+void Diary::on_menuButton_clicked()
+{
+    Menu *m = new Menu;
+    m->show();
+    m->setFixedSize(m->size());
+
+    this->close();
+}
+
+void Diary::on_newNoteButton_clicked()
+{
+    CreateNote *c = new CreateNote;
+    c->show();
+    c->activateWindow();
+
+    this->close();
+    //this->setDisabled(true);
+}

@@ -27,11 +27,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         diary.cpp \
-    note.cpp
+    note.cpp \
+    menu.cpp \
+    createnote.cpp
 
 HEADERS += \
         diary.h \
-    note.h
+    note.h \
+    menu.h \
+    createnote.h
 
 FORMS += \
-        diary.ui
+        diary.ui \
+    menu.ui \
+    createnote.ui

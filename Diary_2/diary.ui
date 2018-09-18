@@ -150,14 +150,14 @@ background-color: rgb(255,255,255)</string>
        </layout>
       </item>
       <item row="1" column="0">
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="newNoteButton">
         <property name="text">
          <string>Создать новую заметку</string>
         </property>
        </widget>
       </item>
       <item row="2" column="0">
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="menuButton">
         <property name="text">
          <string>В главное меню</string>
         </property>

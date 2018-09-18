@@ -1,14 +1,15 @@
 #ifndef DIARY_H
 #define DIARY_H
 
+#include "note.h"
+#include "menu.h"
+#include "createnote.h"
 #include <QMainWindow>
 #include <vector>
 #include <QListWidget>
 #include <QMessageBox>
 #include <string>
 #include <QDebug>
-#include "note.h"
-
 
 namespace Ui {
 class Diary;
@@ -21,7 +22,6 @@ class Diary : public QMainWindow
 public:
     explicit Diary(QWidget *parent = 0);
     ~Diary();
-
 
 
 private slots:
@@ -54,6 +54,10 @@ private slots:
     void on_exit_triggered();
 
     void on_timeEdit_timeChanged(const QTime &time);
+
+    void on_menuButton_clicked();
+
+    void on_newNoteButton_clicked();
 
 private:
     Ui::Diary *ui;
