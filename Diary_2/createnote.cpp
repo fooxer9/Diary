@@ -19,7 +19,9 @@ CreateNote::~CreateNote()
 void CreateNote::on_backButton_clicked()
 {
     d->show();
+    d->hide = true;
     d->write();
+    d->hide = false;
     this->close();
 }
 
@@ -49,16 +51,19 @@ Note CreateNote :: newNote () {
 void CreateNote::on_saveNoteButton_clicked()
 {
 
-    Note note;
-    note.id = d->notes.size();
-    note.setName(ui->titleEdit->text().toStdString());
-    note.setNote(ui->textEdit->toPlainText().toStdString());
-    //note.setTime(ui->timeEdit->time());
-    note.setDate(ui->dateEdit->date());
-    d->notes.push_back(note);
+    if(ui->textEdit->toPlainText() != "" && ui->titleEdit->text() != "") {
+        Note note;
+        note.id = d->notes.size();
+        note.setName(ui->titleEdit->text().toStdString());
+        note.setNote(ui->textEdit->toPlainText().toStdString());
+        //note.setTime(ui->timeEdit->time());
+        note.setDate(ui->dateEdit->date());
+        d->notes.push_back(note);
 
-    on_backButton_clicked();
+        on_backButton_clicked();
 
-    // сохранение в notes - нужно придумать, как передадим заметку в diary
-    // нужно придумать как передать дату в календарь (считывать дату последней созданной заметки?)
+        // сохранение в notes - нужно придумать, как передадим заметку в diary
+        // нужно придумать как передать дату в календарь (считывать дату последней созданной заметки?)
+    }
+
 }

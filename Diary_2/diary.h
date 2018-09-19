@@ -61,6 +61,8 @@ private slots:
 
     void on_newNoteButton_clicked();
 
+    void on_taskList_itemClicked(QListWidgetItem *item);
+
 private:
     Ui::Diary *ui;
     std::vector <Note> notes;   // Все заметки

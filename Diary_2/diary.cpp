@@ -287,3 +287,8 @@ void Diary::on_newNoteButton_clicked()
     ui->taskList->clear();
     this->close();
 }
+
+void Diary::on_taskList_itemClicked(QListWidgetItem *item)
+{
+    ui->taskText->setPlainText(QString::fromStdString(notes[getIndex(item->text().toStdString())].note));
+}

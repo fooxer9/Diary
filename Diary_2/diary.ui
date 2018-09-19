@@ -23,34 +23,51 @@
    <property name="mouseTracking">
     <bool>true</bool>
    </property>
-   <layout class="QGridLayout" name="gridLayout_3">
-    <item row="0" column="1" rowspan="2">
+   <layout class="QGridLayout" name="gridLayout_5">
+    <item row="0" column="0">
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="0">
+       <widget class="QLabel" name="selectDate">
+        <property name="text">
+         <string>Выберите дату: </string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QCalendarWidget" name="calendar">
+        <property name="styleSheet">
+         <string notr="true">selectedDay-front-color: red;</string>
+        </property>
+        <property name="minimumDate">
+         <date>
+          <year>1900</year>
+          <month>1</month>
+          <day>1</day>
+         </date>
+        </property>
+        <property name="gridVisible">
+         <bool>true</bool>
+        </property>
+        <property name="verticalHeaderFormat">
+         <enum>QCalendarWidget::NoVerticalHeader</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="1" rowspan="2">
      <layout class="QGridLayout" name="gridLayout_4">
-      <item row="6" column="1">
+      <item row="7" column="1">
        <widget class="QPushButton" name="deleteButton">
         <property name="text">
          <string>Удалить</string>
         </property>
        </widget>
       </item>
-      <item row="5" column="0">
+      <item row="6" column="0">
        <widget class="QCheckBox" name="hideCompleted">
         <property name="text">
          <string>Скрыть выполненные задачи</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="0">
-       <widget class="QPushButton" name="editButton">
-        <property name="text">
-         <string>Редактировать</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="tasks">
-        <property name="text">
-         <string>Список задач:</string>
         </property>
        </widget>
       </item>
@@ -61,8 +78,21 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="0" colspan="2">
+      <item row="7" column="0">
+       <widget class="QPushButton" name="editButton">
+        <property name="text">
+         <string>Редактировать</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0" colspan="2">
        <widget class="QTextEdit" name="taskText">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="styleSheet">
          <string notr="true">
 border: 10 px solid rgb(200,244,99);
@@ -70,21 +100,11 @@ border-radius: 10px;
 background-color: rgb(255,255,255)</string>
         </property>
         <property name="readOnly">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
        </widget>
       </item>
-      <item row="1" column="0" colspan="2">
-       <widget class="QListWidget" name="taskList">
-        <property name="styleSheet">
-         <string notr="true">
-border: 10 px solid rgb(200,244,99);
-border-radius: 10px;
-background-color: rgb(255,255,255)</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
+      <item row="5" column="0">
        <widget class="QCheckBox" name="todayTasks">
         <property name="text">
          <string>Показать задачи выбранного дня</string>
@@ -93,7 +113,34 @@ background-color: rgb(255,255,255)</string>
       </item>
      </layout>
     </item>
-    <item row="1" column="0">
+    <item row="0" column="1">
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="1" column="0">
+       <widget class="QListWidget" name="taskList">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">
+border: 10 px solid rgb(200,244,99);
+border-radius: 10px;
+background-color: rgb(255,255,255)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="tasks">
+        <property name="text">
+         <string>Список задач:</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0" rowspan="2">
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -159,13 +206,6 @@ background-color: rgb(255,255,255)</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="QPushButton" name="menuButton">
-        <property name="text">
-         <string>В главное меню</string>
-        </property>
-       </widget>
-      </item>
       <item row="3" column="0">
        <widget class="QPushButton" name="saveButton">
         <property name="text">
@@ -173,31 +213,10 @@ background-color: rgb(255,255,255)</string>
         </property>
        </widget>
       </item>
-     </layout>
-    </item>
-    <item row="0" column="0">
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QLabel" name="selectDate">
+      <item row="2" column="0">
+       <widget class="QPushButton" name="menuButton">
         <property name="text">
-         <string>Выберите дату: </string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCalendarWidget" name="calendar">
-        <property name="styleSheet">
-         <string notr="true">selectedDay-front-color: red;</string>
-        </property>
-        <property name="minimumDate">
-         <date>
-          <year>1900</year>
-          <month>1</month>
-          <day>1</day>
-         </date>
-        </property>
-        <property name="gridVisible">
-         <bool>true</bool>
+         <string>В главное меню</string>
         </property>
        </widget>
       </item>
@@ -241,7 +260,6 @@ background-color: rgb(255,255,255)</string>
   <tabstop>editButton</tabstop>
   <tabstop>deleteButton</tabstop>
   <tabstop>hideCompleted</tabstop>
-  <tabstop>taskList</tabstop>
   <tabstop>todayTasks</tabstop>
  </tabstops>
  <resources/>
