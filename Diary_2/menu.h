@@ -4,6 +4,7 @@
 #include "diary.h"
 #include <QMainWindow>
 
+class Diary;
 namespace Ui {
 class Menu;
 }
@@ -13,7 +14,8 @@ class Menu : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit Menu(QWidget *parent = 0);
+    explicit Menu(Diary *d, QWidget *parent = 0);
+    Menu (QWidget *parent = 0);
     ~Menu();
 
 private slots:
@@ -24,6 +26,7 @@ private slots:
 
 private:
     Ui::Menu *ui;
+    Diary *d;
 };
 
 #endif // MENU_H

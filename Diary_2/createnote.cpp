@@ -1,14 +1,14 @@
 #include "createnote.h"
 #include "ui_createnote.h"
 
-CreateNote::CreateNote(QWidget *parent) :
+CreateNote::CreateNote(Diary *d, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::CreateNote)
 {
     ui->setupUi(this);
     ui->dateEdit->setDate(QDate::currentDate());
     ui->timeEdit->setTime(QTime :: currentTime());
-
+    this->d = d;
 }
 
 CreateNote::~CreateNote()
@@ -18,10 +18,8 @@ CreateNote::~CreateNote()
 
 void CreateNote::on_backButton_clicked()
 {
-    Diary *d = new Diary;
-    //d->setEnabled(true);
     d->show();
-
+    d->write();
     this->close();
 }
 
@@ -44,18 +42,22 @@ void CreateNote::on_timeEdit_timeChanged(const QTime &time) // запрет на
 }
 
 Note CreateNote :: newNote () {
-    Note note;
-    note.setName(ui->titleEdit->text().toStdString());
-    note.setNote(ui->textEdit->toPlainText().toStdString());
-    //note.setTime(ui->timeEdit->time());
-    note.setDate(ui->dateEdit->date());
-    return note;
+
 
 }
 
 void CreateNote::on_saveNoteButton_clicked()
 {
 
+    Note note;
+    note.id = d->notes.size();
+    note.setName(ui->titleEdit->text().toStdString());
+    note.setNote(ui->textEdit->toPlainText().toStdString());
+    //note.setTime(ui->timeEdit->time());
+    note.setDate(ui->dateEdit->date());
+    d->notes.push_back(note);
+
+    on_backButton_clicked();
 
     // сохранение в notes - нужно придумать, как передадим заметку в diary
     // нужно придумать как передать дату в календарь (считывать дату последней созданной заметки?)

@@ -9,7 +9,6 @@ Diary::Diary(QWidget *parent) :
 
     ui->setupUi(this);
    // if (ui->timeEdit->time() < QTime :: currentTime() ) ui->saveButton->setDisabled(true); //блок кнопки сохранения, если время на таймере меньше системного времени
-
 }
 
 Diary::~Diary()
@@ -273,7 +272,7 @@ void Diary::on_timeEdit_timeChanged(const QTime &time) //это теперь т�
 
 void Diary::on_menuButton_clicked()
 {
-    Menu *m = new Menu;
+    Menu *m = new Menu(this);
     m->show();
     m->setFixedSize(m->size());
 
@@ -282,10 +281,9 @@ void Diary::on_menuButton_clicked()
 
 void Diary::on_newNoteButton_clicked()
 {
-    CreateNote *c = new CreateNote;
+    CreateNote *c = new CreateNote(this);
     c->show();
-    c->activateWindow();
-
+    c->setFixedSize(c->size());
+    ui->taskList->clear();
     this->close();
-    //this->setDisabled(true);
 }

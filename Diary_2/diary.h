@@ -24,7 +24,7 @@ public:
     explicit Diary(QWidget *parent = 0);
     ~Diary();
 
-//friend class CreateNote;
+friend class CreateNote;
 
 private slots:
     void write();

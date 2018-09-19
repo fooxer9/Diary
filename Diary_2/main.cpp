@@ -5,8 +5,6 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    /*Diary w;
-    w.show();*/
 
     Menu m;
     m.show();
