@@ -10,6 +10,7 @@ public:
     std::string name;
     std::string note;
     std::string time;
+    std::string printedName;
     QDate date;
     //std::string date;
 

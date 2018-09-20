@@ -22,7 +22,6 @@ public:
 private slots:
     void on_backButton_clicked();
 
-    Note newNote ();
     void on_dateEdit_dateChanged(const QDate &date);
 
     void on_timeEdit_timeChanged(const QTime &time);

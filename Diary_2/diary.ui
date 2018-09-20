@@ -111,6 +111,13 @@ background-color: rgb(255,255,255)</string>
         </property>
        </widget>
       </item>
+      <item row="2" column="1">
+       <widget class="QPushButton" name="clearTextButton">
+        <property name="text">
+         <string>Очистить текст</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
     <item row="0" column="1">
@@ -199,6 +206,13 @@ background-color: rgb(255,255,255)</string>
         </item>
        </layout>
       </item>
+      <item row="4" column="0">
+       <widget class="QPushButton" name="saveButton">
+        <property name="text">
+         <string>Сохранить</string>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="0">
        <widget class="QPushButton" name="newNoteButton">
         <property name="text">
@@ -206,17 +220,17 @@ background-color: rgb(255,255,255)</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
-       <widget class="QPushButton" name="saveButton">
-        <property name="text">
-         <string>Сохранить</string>
-        </property>
-       </widget>
-      </item>
       <item row="2" column="0">
        <widget class="QPushButton" name="menuButton">
         <property name="text">
          <string>В главное меню</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QPushButton" name="clearTasksButton">
+        <property name="text">
+         <string>Очистить ежедневник</string>
         </property>
        </widget>
       </item>
@@ -238,6 +252,7 @@ background-color: rgb(255,255,255)</string>
      <string>Файл</string>
     </property>
     <addaction name="instruction"/>
+    <addaction name="action_2"/>
     <addaction name="exit"/>
    </widget>
    <addaction name="menu"/>
@@ -251,6 +266,16 @@ background-color: rgb(255,255,255)</string>
   <action name="exit">
    <property name="text">
     <string>Выйти из программы</string>
+   </property>
+  </action>
+  <action name="action">
+   <property name="text">
+    <string>Сохранить как...</string>
+   </property>
+  </action>
+  <action name="action_2">
+   <property name="text">
+    <string>Сохранить как...</string>
    </property>
   </action>
  </widget>

@@ -63,6 +63,10 @@ private slots:
 
     void on_taskList_itemClicked(QListWidgetItem *item);
 
+    void on_clearTextButton_clicked();
+
+    void on_clearTasksButton_clicked();
+
 private:
     Ui::Diary *ui;
     std::vector <Note> notes;   // Все заметки

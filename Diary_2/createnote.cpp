@@ -43,11 +43,6 @@ void CreateNote::on_timeEdit_timeChanged(const QTime &time) // запрет на
 
 }
 
-Note CreateNote :: newNote () {
-
-
-}
-
 void CreateNote::on_saveNoteButton_clicked()
 {
 
