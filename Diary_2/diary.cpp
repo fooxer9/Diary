@@ -8,7 +8,7 @@ Diary::Diary(QWidget *parent) :
 {
 
     ui->setupUi(this);
-   // if (ui->timeEdit->time() < QTime :: currentTime() ) ui->saveButton->setDisabled(true); //блок кнопки сохранения, если время на таймере меньше системного времени
+
 }
 
 Diary::~Diary()
@@ -53,6 +53,12 @@ int Diary::getIndex(std::string text) { // Получить индекс эле�
         index += (text[i - j] - 48) * pow(10, j);
     }
     return index;
+}
+
+void Diary :: calendar_color() { // календарь будет закрашивать дату последней созданной заметки
+    QTextCharFormat format = ui->calendar->dateTextFormat(notes[notes.size()-1].date); // закрашивание ячейки календаря
+    format.setBackground(QBrush(QColor (200,244,99), Qt::SolidPattern));                 // в QColor потом подберем цвет ячейки календаря
+    ui->calendar->setDateTextFormat(notes[notes.size()-1].date, format);
 }
 
 void Diary::on_saveButton_clicked() // Сохранения заметки - теперь это не тут должно быть
@@ -129,7 +135,7 @@ void Diary::on_deleteButton_clicked()  // Удаление заметки
 
             notes.erase(notes.begin() + getIndex(ui->taskList->currentItem()->text().toStdString()));
             delete ui->taskList->currentItem();
-            on_clearTextButton_clicked();
+            ui->taskText->clear();
 
             // перекрашивание ячейки, если на день нет больше заданий
             if (day_is_empty(tmp)) {
@@ -143,14 +149,16 @@ void Diary::on_deleteButton_clicked()  // Удаление заметки
 
 void Diary::on_editButton_clicked()  // Редактирование заметки //будет тоже вызываться окошко createnote, но с выставленными данными
 {
-    /*if(!hide) {
-        if(ui->taskList->currentItem()) {
-            editFlag = getIndex(ui->taskList->currentItem()->text().toStdString());
-            ui->taskText->setPlainText(QString::fromStdString(notes[editFlag].note));
-            ui->timeEdit->setTime(QTime::fromString(QString::fromStdString(notes[editFlag].time), "hh:mm"));
-            ui->calendar->setSelectedDate(notes[editFlag].date);
-        }
-    }*/
+    if(ui->taskList->currentItem()) {
+        editFlag = getIndex(ui->taskList->currentItem()->text().toStdString());
+
+        QDate tmp =  notes[getIndex(ui->taskList->currentItem()->text().toStdString())].date;
+        QTextCharFormat format = ui->calendar->dateTextFormat(tmp);
+        format.clearBackground();
+        ui->calendar->setDateTextFormat(tmp, format);
+
+        on_newNoteButton_clicked();
+    }
 }
 
 void Diary::on_taskList_itemDoubleClicked()  // Редактирование заметки
@@ -198,11 +206,11 @@ void Diary::on_taskList_itemChanged(QListWidgetItem *item) // Обработчи
 
 }
 
-void Diary::on_calendar_clicked(const QDate &date) //Запрет на создание новых дел для прошедших дней
+/*void Diary::on_calendar_clicked(const QDate &date) //Запрет на создание новых дел для прошедших дней
 {
     if (date < QDate::currentDate()) ui->saveButton->setDisabled(true);
     else ui->saveButton->setDisabled(false);
-}
+}*/
 
 void Diary::on_todayTasks_stateChanged(int arg1) // Список событий на конкретную дату
 {
@@ -214,7 +222,7 @@ void Diary::on_todayTasks_stateChanged(int arg1) // Список событий 
         for (unsigned int i = 0; i < notes.size(); i++){
 
             if (notes[i].date == ui->calendar->selectedDate()) {
-                QListWidgetItem *item = new QListWidgetItem(QString::fromStdString(notes[i].name), ui->taskList);
+                QListWidgetItem *item = new QListWidgetItem(QString::fromStdString(notes[i].printedName), ui->taskList);
                 if(notes[i].completeFlag == true) {
                     item->setCheckState(Qt::Checked);
                 }
@@ -261,14 +269,14 @@ void Diary::on_exit_triggered()
     }
 }
 
-void Diary::on_timeEdit_timeChanged(const QTime &time) //это теперь тоже должно быть не здесь
+/*void Diary::on_timeEdit_timeChanged(const QTime &time) //это теперь тоже должно быть не здесь
 {
     if (ui->calendar->selectedDate() == QDate :: currentDate()) {
     if (time < QTime::currentTime()) ui->saveButton->setDisabled(true);
     else ui->saveButton->setDisabled(false);
     }
     else ui->saveButton->setDisabled(false);
-}
+}*/
 
 void Diary::on_menuButton_clicked()
 {
@@ -305,16 +313,23 @@ void Diary::on_clearTasksButton_clicked()
 {
     QMessageBox clear(QMessageBox::Question,
                 tr("Очистка"),
-                tr("Вы действительно хотите очистить еждневник?"),
+                tr("Вы действительно хотите очистить ежедневник?"),
                 QMessageBox::Yes | QMessageBox::No,
                 this);
         clear.setButtonText(QMessageBox::Yes, tr("Действительно хочу!"));
         clear.setButtonText(QMessageBox::No, tr("НЕТ!"));
 
     if (clear.exec() == QMessageBox::Yes){
+        for (unsigned int i = 0; i < notes.size(); i++) {
+            if (i >=1 && notes[i].date == notes[i-1].date) continue;
+            QTextCharFormat format = ui->calendar->dateTextFormat(notes[i].date);
+            format.clearBackground();
+            ui->calendar->setDateTextFormat(notes[i].date, format);
+        }
         notes.clear();
         notes.resize(0);
         ui->taskList->clear();
         ui->taskText->clear();
+
     }
 }

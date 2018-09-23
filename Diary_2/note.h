@@ -9,7 +9,7 @@ class Note
 public:
     std::string name;
     std::string note;
-    std::string time;
+    QTime time;
     std::string printedName;
     QDate date;
     //std::string date;
@@ -19,7 +19,7 @@ public:
 
     void setName(std::string text);
     void setNote(std::string text);
-    void setTime(std::string text);
+    void setTime(QTime time);
     void setDate(QDate date);
     void setId(int num);
 

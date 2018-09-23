@@ -13,8 +13,8 @@ void Note::setNote(std::string text) {
     this->note = text;
 }
 
-void Note::setTime(std::string text) {
-    this->time = text;
+void Note::setTime(QTime time) {
+    this->time = time;
 }
 
 void Note::setDate(QDate date) {

@@ -6,9 +6,18 @@ CreateNote::CreateNote(Diary *d, QWidget *parent) :
     ui(new Ui::CreateNote)
 {
     ui->setupUi(this);
-    ui->dateEdit->setDate(QDate::currentDate());
-    ui->timeEdit->setTime(QTime :: currentTime());
     this->d = d;
+
+    if(d->editFlag != -1) {
+        ui->titleEdit->setText(QString::fromStdString(d->notes[d->editFlag].name));
+        ui->textEdit->setPlainText(QString::fromStdString(d->notes[d->editFlag].note));
+        ui->timeEdit->setTime(d->notes[d->editFlag].time);
+        ui->dateEdit->setDate(d->notes[d->editFlag].date);
+    }
+    else {
+        ui->dateEdit->setDate(QDate::currentDate());
+        ui->timeEdit->setTime(QTime :: currentTime());
+    }
 }
 
 CreateNote::~CreateNote()
@@ -45,20 +54,30 @@ void CreateNote::on_timeEdit_timeChanged(const QTime &time) // запрет на
 
 void CreateNote::on_saveNoteButton_clicked()
 {
+    if(d->editFlag != -1 && ui->textEdit->toPlainText() != "" && ui->titleEdit->text() != "") { // Редактирование существующей заметки
+        d->notes[d->editFlag].setName(ui->titleEdit->text().toStdString());
+        d->notes[d->editFlag].setNote(ui->textEdit->toPlainText().toStdString());
+        d->notes[d->editFlag].setTime(ui->timeEdit->time());
+        d->notes[d->editFlag].setDate(ui->dateEdit->date());
 
-    if(ui->textEdit->toPlainText() != "" && ui->titleEdit->text() != "") {
+        d->calendar_color();
+        d->editFlag = -1;
+        on_backButton_clicked();
+    }
+
+    else if(ui->textEdit->toPlainText() != "" && ui->titleEdit->text() != "") {
         Note note;
         note.id = d->notes.size();
         note.setName(ui->titleEdit->text().toStdString());
         note.setNote(ui->textEdit->toPlainText().toStdString());
-        //note.setTime(ui->timeEdit->time());
+        note.setTime(ui->timeEdit->time());
         note.setDate(ui->dateEdit->date());
         d->notes.push_back(note);
 
         on_backButton_clicked();
+        d->calendar_color();
 
         // сохранение в notes - нужно придумать, как передадим заметку в diary
         // нужно придумать как передать дату в календарь (считывать дату последней созданной заметки?)
     }
-
 }
