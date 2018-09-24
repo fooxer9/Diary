@@ -29,8 +29,17 @@ void CreateNote::on_backButton_clicked()
 {
     d->show();
     d->hide = true;
-    d->write();
+    if(d->todayTasksFlag == true && d->hideCompletedFlag == true) {
+        d->writeTodayUnchecked();
+    } else if(d->todayTasksFlag == true) {
+        d->writeToday();
+    } else if(d->hideCompletedFlag == true) {
+        d->writeUnchecked();
+    } else {
+        d->write();
+    }
     d->hide = false;
+    d->editFlag = -1;
     this->close();
 }
 
@@ -61,7 +70,6 @@ void CreateNote::on_saveNoteButton_clicked()
         d->notes[d->editFlag].setDate(ui->dateEdit->date());
 
         d->calendar_color();
-        d->editFlag = -1;
         on_backButton_clicked();
     }
 

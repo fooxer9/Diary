@@ -18,6 +18,7 @@ Diary::~Diary()
 
 void Diary::write() { // Запись в лист всех задач
     for(unsigned int i = 0; i < notes.size(); i++) {
+        //sorting
         notes[i].id = i;
         notes[i].setName(notes[i].name);
         QListWidgetItem *item = new QListWidgetItem(QString::fromStdString(notes[i].printedName), ui->taskList);
@@ -33,12 +34,45 @@ void Diary::write() { // Запись в лист всех задач
 
 void Diary::writeUnchecked() { // Запись в лист невыполненных задач
     for(unsigned int i = 0; i < notes.size(); i++) {
+        //sorting
+        notes[i].id = i;
+        notes[i].setName(notes[i].name);
         if(notes[i].completeFlag == false) {
             QListWidgetItem *item = new QListWidgetItem(QString::fromStdString(notes[i].printedName), ui->taskList);
             item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
             item->setCheckState(Qt::Unchecked);
         }
     }
+}
+
+void Diary::writeTodayUnchecked() { // Запись невыполненных задач выбранного дня
+    for(unsigned i = 0; i < notes.size(); i++) {
+        //sorting
+        notes[i].id = i;
+        notes[i].setName(notes[i].name);
+        if(notes[i].completeFlag == false && notes[i].date == ui->calendar->selectedDate()) {
+            QListWidgetItem *item = new QListWidgetItem(QString::fromStdString(notes[i].printedName), ui->taskList);
+            item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
+            item->setCheckState(Qt::Unchecked);
+        }
+    }
+}
+
+void Diary::writeToday() { // Запись сегодняшних задач
+    for (unsigned int i = 0; i < notes.size(); i++){
+        //sorting
+        notes[i].id = i;
+        notes[i].setName(notes[i].name);
+        if (notes[i].date == ui->calendar->selectedDate()) {
+            QListWidgetItem *item = new QListWidgetItem(QString::fromStdString(notes[i].printedName), ui->taskList);
+            if(notes[i].completeFlag == true) {
+                item->setCheckState(Qt::Checked);
+            }
+            else {
+                item->setCheckState(Qt::Unchecked);
+            }
+        }
+     }
 }
 
 int Diary::getIndex(std::string text) { // Получить индекс элемента списка
@@ -147,7 +181,7 @@ void Diary::on_deleteButton_clicked()  // Удаление заметки
     }
 }
 
-void Diary::on_editButton_clicked()  // Редактирование заметки //будет тоже вызываться окошко createnote, но с выставленными данными
+void Diary::on_editButton_clicked()  // Редактирование заметки
 {
     if(ui->taskList->currentItem()) {
         editFlag = getIndex(ui->taskList->currentItem()->text().toStdString());
@@ -163,24 +197,42 @@ void Diary::on_editButton_clicked()  // Редактирование замет�
 
 void Diary::on_taskList_itemDoubleClicked()  // Редактирование заметки
 {
-    Diary::on_editButton_clicked();
+    on_editButton_clicked();
 }
 
 void Diary::on_hideCompleted_stateChanged(int arg1) // Скрыть выполненные задачи
 {
-    if(arg1) {
-        // Write unchecked
+    if(arg1 && todayTasksFlag == true) {
+        //Write today's unchecked
+        hideCompletedFlag = true;
+
         hide = true;
         ui->taskList->clear();
-        Diary::writeUnchecked();
+        writeTodayUnchecked();
+        hide = false;
+        ui->taskText->clear();
+    }
+    else if(arg1) {
+        // Write unchecked
+        hideCompletedFlag = true;
+
+        hide = true;
+        ui->taskList->clear();
+        writeUnchecked();
         hide = false;
         ui->taskText->clear();
     }
     else {
         // Write all
+        hideCompletedFlag = false;
+
         hide = true;
         ui->taskList->clear();
-        Diary::write();
+        if(todayTasksFlag == true) {
+            writeToday();
+        } else {
+            write();
+        }
         hide = false;
     }
 }
@@ -189,7 +241,7 @@ void Diary::on_hideCompleted_stateChanged(int arg1) // Скрыть выполн
 void Diary::on_taskList_itemChanged(QListWidgetItem *item) // Обработчик событий на листе, синхронизирует переменные и галочки
 {
 
-    ui->calendar->setSelectedDate(notes[getIndex(item->text().toStdString())].date);
+    //ui->calendar->setSelectedDate(notes[getIndex(item->text().toStdString())].date);
     if(!hide) {
         if(item->checkState() == Qt::Checked) {
             notes[getIndex(item->text().toStdString())].completeFlag = true;
@@ -214,47 +266,53 @@ void Diary::on_taskList_itemChanged(QListWidgetItem *item) // Обработчи
 
 void Diary::on_todayTasks_stateChanged(int arg1) // Список событий на конкретную дату
 {
-    if (arg1) {
+    if(arg1 && hideCompletedFlag == true) {
+        todayTasksFlag = true;
+
+        hide = true;
+        ui->taskList->clear();
+        writeTodayUnchecked();
+        hide = false;
+        ui->taskText->clear();
+    }
+    else if (arg1) {
+        todayTasksFlag = true;
+
         hide = true;
         ui->taskList->clear();
         hide = false;
+        writeToday();
+        ui->taskText->clear();
+     } else {
+        todayTasksFlag = false;
 
-        for (unsigned int i = 0; i < notes.size(); i++){
-
-            if (notes[i].date == ui->calendar->selectedDate()) {
-                QListWidgetItem *item = new QListWidgetItem(QString::fromStdString(notes[i].printedName), ui->taskList);
-                if(notes[i].completeFlag == true) {
-                    item->setCheckState(Qt::Checked);
-                }
-                else {
-                    item->setCheckState(Qt::Unchecked);
-                }
-            }
-         }
-     }  else {
         hide = true;
         ui->taskList->clear();
-        this->write();
+        if(hideCompletedFlag == true) {
+            writeUnchecked();
+        } else {
+            write();
+        }
         hide = false;
     }
  }
 
 
-bool Diary :: day_is_empty(QDate &date) { //проверка, остались ли дела на указанный день
+bool Diary :: day_is_empty(QDate &date) { // Проверка, остались ли дела на указанный день
 
     for (unsigned int i = 0; i < notes.size(); i++)
         if (date == notes[i].date) return 0;
     return 1;
 }
 
-void Diary::on_instruction_triggered()
+void Diary::on_instruction_triggered()  // Инструкция
 {
     QString information = "Приложение \"Ежедневник\" позволяет создавать и редактировать задачи, отсортированные по дате и времени, а также контролировать их выполнение.\n"
                           "В левом поле Ваша заметка Вы можете ввести задачу, в календаре над полем выбрать дату не чёто плохо заходит и спать охота напишу потом";
     QMessageBox::information(this, "Инструкция", information);
 }
 
-void Diary::on_exit_triggered()
+void Diary::on_exit_triggered()         // Выход
 {
     QMessageBox exit(QMessageBox::Question,
                 tr("Выход"),
@@ -278,7 +336,7 @@ void Diary::on_exit_triggered()
     else ui->saveButton->setDisabled(false);
 }*/
 
-void Diary::on_menuButton_clicked()
+void Diary::on_menuButton_clicked()     // Переход в главное меню
 {
     Menu *m = new Menu(this);
     m->show();
@@ -288,7 +346,7 @@ void Diary::on_menuButton_clicked()
     this->close();
 }
 
-void Diary::on_newNoteButton_clicked()
+void Diary::on_newNoteButton_clicked()      // Создание новой заметки
 {
     CreateNote *c = new CreateNote(this);
     c->show();
@@ -299,17 +357,17 @@ void Diary::on_newNoteButton_clicked()
     this->close();
 }
 
-void Diary::on_taskList_itemClicked(QListWidgetItem *item)
+void Diary::on_taskList_itemClicked(QListWidgetItem *item)      // Текс выбранной задачи
 {
     ui->taskText->setPlainText(QString::fromStdString(notes[getIndex(item->text().toStdString())].note));
 }
 
-void Diary::on_clearTextButton_clicked()
+void Diary::on_clearTextButton_clicked()        // Очистка окна с текстом выбранной задачи
 {
     ui->taskText->clear();
 }
 
-void Diary::on_clearTasksButton_clicked()
+void Diary::on_clearTasksButton_clicked()       // Удаление всех задач
 {
     QMessageBox clear(QMessageBox::Question,
                 tr("Очистка"),

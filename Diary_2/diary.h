@@ -31,6 +31,10 @@ private slots:
 
     void writeUnchecked();
 
+    void writeTodayUnchecked();
+
+    void writeToday();
+
     int getIndex(std::string);
 
     void calendar_color ();
@@ -71,9 +75,11 @@ private slots:
 
 private:
     Ui::Diary *ui;
-    std::vector <Note> notes;   // Все заметки
-    int editFlag = -1;          // Флаг редактирования, содержит номер редактируемой заметки или значение = -1
-    bool hide = false;          // Успокаивает обработчик событий на листе
+    std::vector <Note> notes;           // Все заметки
+    int editFlag = -1;                  // Флаг редактирования, содержит номер редактируемой заметки или значение = -1
+    bool hide = false;                  // Успокаивает обработчик событий на листе
+    bool hideCompletedFlag = false;     // Флаг поднят, при галочке на "Скрыть выполненные"
+    bool todayTasksFlag = false;        // Флаг поднят, при галочке на "Показать сегодняшние"
 };
 
 

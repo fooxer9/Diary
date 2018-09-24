@@ -21,7 +21,7 @@ void Note::setDate(QDate date) {
     this->date = date;
 }
 
-void Note::setId(int num) {
+/*void Note::setId(int num) {
     this->id = num;
     if(num < 10) {
         this->printedName.erase(this->name.begin(), this->name.begin() + 3);
@@ -37,4 +37,4 @@ void Note::setId(int num) {
         this->printedName.insert(this->name.begin() + 2, '.');
         this->printedName.insert(this->name.begin() + 3, ' ');
     }
-}
+}*/
