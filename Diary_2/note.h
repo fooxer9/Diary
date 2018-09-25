@@ -7,21 +7,19 @@
 class Note
 {
 public:
-    std::string name;
+    std::string name;               // Фактическое имя
     std::string note;
     QTime time;
-    std::string printedName;
+    std::string printedName;        // Печатаемое в списке имя (с индексом)
     QDate date;
-    //std::string date;
-
     bool completeFlag = false;      // Галочка у заметки отсутствует
     int id;
 
-    void setName(std::string text);
+    void setName(std::string text); // Задать фактическое имя и печатаемое (в соответствии с индексом)
     void setNote(std::string text);
     void setTime(QTime time);
     void setDate(QDate date);
-    void setId(int num);
+    //void setId(int num);            // Стереть предыдущий индекс из печатаемого имени и записать новый
 
 };
 

@@ -45,7 +45,7 @@ void Diary::write() { // Запись в лист всех задач
 
 void Diary::writeUnchecked() { // Запись в лист невыполненных задач
     for(unsigned int i = 0; i < notes.size(); i++) {
-        //sorting
+        //sorting , а зочем туть?
         notes[i].id = i;
         notes[i].setName(notes[i].name);
         if(notes[i].completeFlag == false) {
@@ -58,7 +58,7 @@ void Diary::writeUnchecked() { // Запись в лист невыполнен�
 
 void Diary::writeTodayUnchecked() { // Запись невыполненных задач выбранного дня
     for(unsigned i = 0; i < notes.size(); i++) {
-        //sorting
+        //sorting и туть зочем??))
         notes[i].id = i;
         notes[i].setName(notes[i].name);
         if(notes[i].completeFlag == false && notes[i].date == ui->calendar->selectedDate()) {
@@ -71,7 +71,7 @@ void Diary::writeTodayUnchecked() { // Запись невыполненных �
 
 void Diary::writeToday() { // Запись сегодняшних задач
     for (unsigned int i = 0; i < notes.size(); i++){
-        //sorting
+        //sorting не нужна)))
         notes[i].id = i;
         notes[i].setName(notes[i].name);
         if (notes[i].date == ui->calendar->selectedDate()) {

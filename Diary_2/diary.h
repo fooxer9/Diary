@@ -11,6 +11,7 @@
 #include <string>
 #include <QDebug>
 #include "createnote.h"
+#include <algorithm>
 
 namespace Ui {
 class Diary;
@@ -22,6 +23,8 @@ class Diary : public QMainWindow
 
 public:
     explicit Diary(QWidget *parent = 0);
+    static bool sorting (Note one, Note two);
+    bool (*ptr) (Note one, Note two) = &sorting;
     ~Diary();
 
 friend class CreateNote;
@@ -30,6 +33,10 @@ private slots:
     void write();
 
     void writeUnchecked();
+
+    void writeTodayUnchecked();
+
+    void writeToday();
 
     int getIndex(std::string);
 
@@ -71,9 +78,11 @@ private slots:
 
 private:
     Ui::Diary *ui;
-    std::vector <Note> notes;   // Все заметки
-    int editFlag = -1;          // Флаг редактирования, содержит номер редактируемой заметки или значение = -1
-    bool hide = false;          // Успокаивает обработчик событий на листе
+    std::vector <Note> notes;           // Все заметки
+    int editFlag = -1;                  // Флаг редактирования, содержит номер редактируемой заметки или значение = -1
+    bool hide = false;                  // Успокаивает обработчик событий на листе
+    bool hideCompletedFlag = false;     // Флаг поднят, при галочке на "Скрыть выполненные"
+    bool todayTasksFlag = false;        // Флаг поднят, при галочке на "Показать сегодняшние"
 };
 
 
