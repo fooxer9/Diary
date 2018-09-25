@@ -188,6 +188,8 @@ void Diary::on_deleteButton_clicked()  // Удаление заметки
                 format.clearBackground();
                 ui->calendar->setDateTextFormat(tmp, format);
             }
+            ui->taskList->clear();
+            write();
         }
     }
 }
