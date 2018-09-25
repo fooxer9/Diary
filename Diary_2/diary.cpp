@@ -27,7 +27,7 @@ bool Diary :: sorting (Note one, Note two)
 }
 
 void Diary::write() { // Запись в лист всех задач
-    std::sort(notes.begin(),notes.end(),ptr);
+   // std::sort(notes.begin(),notes.end(),ptr);
     for(unsigned int i = 0; i < notes.size(); i++) {
         //sorting
         notes[i].id = i;
@@ -45,7 +45,7 @@ void Diary::write() { // Запись в лист всех задач
 
 void Diary::writeUnchecked() { // Запись в лист невыполненных задач
     for(unsigned int i = 0; i < notes.size(); i++) {
-        //sorting
+        //sorting , а зочем туть?
         notes[i].id = i;
         notes[i].setName(notes[i].name);
         if(notes[i].completeFlag == false) {
@@ -58,7 +58,7 @@ void Diary::writeUnchecked() { // Запись в лист невыполнен�
 
 void Diary::writeTodayUnchecked() { // Запись невыполненных задач выбранного дня
     for(unsigned i = 0; i < notes.size(); i++) {
-        //sorting
+        //sorting и туть зочем??))
         notes[i].id = i;
         notes[i].setName(notes[i].name);
         if(notes[i].completeFlag == false && notes[i].date == ui->calendar->selectedDate()) {
@@ -71,7 +71,7 @@ void Diary::writeTodayUnchecked() { // Запись невыполненных �
 
 void Diary::writeToday() { // Запись сегодняшних задач
     for (unsigned int i = 0; i < notes.size(); i++){
-        //sorting
+        //sorting не нужна)))
         notes[i].id = i;
         notes[i].setName(notes[i].name);
         if (notes[i].date == ui->calendar->selectedDate()) {
@@ -100,10 +100,10 @@ int Diary::getIndex(std::string text) { // Получить индекс эле�
     return index;
 }
 
-void Diary :: calendar_color() { // календарь будет закрашивать дату последней созданной заметки
-    QTextCharFormat format = ui->calendar->dateTextFormat(notes[notes.size()-1].date); // закрашивание ячейки календаря
+void Diary :: calendar_color(QDate date) { // календарь будет закрашивать дату последней созданной заметки
+    QTextCharFormat format = ui->calendar->dateTextFormat(date); // закрашивание ячейки календаря
     format.setBackground(QBrush(QColor (200,244,99), Qt::SolidPattern));                 // в QColor потом подберем цвет ячейки календаря
-    ui->calendar->setDateTextFormat(notes[notes.size()-1].date, format);
+    ui->calendar->setDateTextFormat(date, format);
 }
 
 void Diary::on_saveButton_clicked() // Сохранения заметки - теперь это не тут должно быть

@@ -40,7 +40,7 @@ private slots:
 
     int getIndex(std::string);
 
-    void calendar_color ();
+    void calendar_color (QDate date);
 
     bool day_is_empty(QDate &date);
 

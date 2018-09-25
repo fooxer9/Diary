@@ -69,7 +69,8 @@ void CreateNote::on_saveNoteButton_clicked()
         d->notes[d->editFlag].setTime(ui->timeEdit->time());
         d->notes[d->editFlag].setDate(ui->dateEdit->date());
 
-        d->calendar_color();
+        d->calendar_color(d->notes[d->editFlag].date);
+        std::sort(d->notes.begin(),d->notes.end(),d->ptr);
         on_backButton_clicked();
     }
 
@@ -81,7 +82,8 @@ void CreateNote::on_saveNoteButton_clicked()
         note.setTime(ui->timeEdit->time());
         note.setDate(ui->dateEdit->date());
         d->notes.push_back(note);
-        d->calendar_color();
+        d->calendar_color(d->notes[d->notes.size()-1].date);
+        std::sort(d->notes.begin(),d->notes.end(),d->ptr);
         on_backButton_clicked();
 
 
