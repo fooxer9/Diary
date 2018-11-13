@@ -5,7 +5,6 @@ CreateNote::CreateNote(Diary *d, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::CreateNote)
 {
-    //setWindowTitle("Create Note");
 
     ui->setupUi(this);
     this->d = d;
@@ -91,7 +90,5 @@ void CreateNote::on_saveNoteButton_clicked()
         on_backButton_clicked();
 
 
-        // сохранение в notes - нужно придумать, как передадим заметку в diary
-        // нужно придумать как передать дату в календарь (считывать дату последней созданной заметки?)
     }
 }

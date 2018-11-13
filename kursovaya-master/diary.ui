@@ -204,7 +204,7 @@ background-color: rgb(255,255,255)</string>
      <x>0</x>
      <y>0</y>
      <width>622</width>
-     <height>19</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
@@ -212,7 +212,6 @@ background-color: rgb(255,255,255)</string>
      <string>Файл</string>
     </property>
     <addaction name="instruction"/>
-    <addaction name="action_2"/>
     <addaction name="exit"/>
    </widget>
    <addaction name="menu"/>

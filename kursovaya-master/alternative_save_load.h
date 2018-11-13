@@ -127,14 +127,14 @@ void C0mpleteFlag(QList<bool>checked,QStringList *Checked){
         if(checked[i] == true)
         {
             qDebug() << "------------------------------------------------2";
-            //string[i].append("1");
+
             string = string + "1,";
             qDebug() << string <<"true";
         }
         if(checked[i] == false)
         {
             qDebug() << "------------------------------------------------3";
-            //string[i].append("0");
+
             string = string + "0,";
             qDebug() << string << "false";
         }
@@ -168,7 +168,7 @@ void save_file(QString NameDiary, QStringList Date, QStringList Text, QStringLis
     qDebug() << "------------------------------err0r2";
     for(int n = 0; n < size; n++)
     {
-            QString ss  = "!?!??"; //просто так:), если интересно, то переводится как "N0TE"
+            QString ss  = "!?!??";
             what_to_save = what_to_save + Date[n] + ss + Time[n] + ss + Name[n] + ss + Text[n] + ss + string[n] + ss;
     }
     save_f(standartPath, what_to_save);

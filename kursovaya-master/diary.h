@@ -60,15 +60,11 @@ private slots:
 
     void on_taskList_itemChanged(QListWidgetItem *item);
 
-    //void on_calendar_clicked(const QDate &date);
-
     void on_todayTasks_stateChanged(int arg1);
 
     void on_instruction_triggered();
 
     void on_exit_triggered();
-
-    //void on_timeEdit_timeChanged(const QTime &time);
 
     void on_menuButton_clicked();
 

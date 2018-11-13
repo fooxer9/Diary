@@ -77,17 +77,12 @@ void Menu::on_opencurrent_button_clicked()
 {
     QString NameDiary = ui->comboBox->currentText();
     make_cfg(NameDiary);
-   if(!d) {
+
         Diary *di = new Diary(this);
         di->show();
 
         this->close();
-    }
-    else {
-        d->show(); // d - указатель на последний открытый дневник, не он тут должен открываться
 
-        this->close();
-    }
 }
 
 void Menu::on_importButton_clicked()
